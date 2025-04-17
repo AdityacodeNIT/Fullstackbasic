@@ -1,8 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-
-
 import UserContext from "../../context/UserContext";
 
 const Navbar = () => {
@@ -10,48 +7,60 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="navbar w-full text-white bg-[#1E293B] h-16 px-6 shadow-xl">
-      <div className="flex w-full items-center justify-between h-full">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#00B4D8] to-[#0096C7] text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-[#FACC15] text-2xl lg:text-3xl font-extrabold">
-          <span className="text-white">Book</span>Verse
+        <div className="flex items-center text-2xl font-bold space-x-2">
+          <span className="text-3xl">📚</span>
+          <span className="font-serif text-white">BookVerse</span>
         </div>
 
-        {/* Hamburger Menu for Mobile */}
-        <button
-          className="md:hidden text-white text-2xl focus:outline-none"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-
-        </button>
-
-        {/* Navigation Links */}
-        <div
-          className={`${
-            menuOpen ? "flex" : "hidden"
-          } md:flex flex-col md:flex-row items-center absolute md:static top-20 left-0 w-full md:w-auto bg-[#1E293B] md:bg-transparent md:space-x-8 p-4 md:p-0 z-50 transition-all duration-300`}
-        >
-          <ul className="flex flex-col md:flex-row w-full md:w-auto items-center space-y-4 md:space-y-0">
-            <li className="mx-3 text-md lg:text-lg text-[#FACC15] font-semibold hover:text-[#38BDF8] transition-colors duration-200">
-              <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-            </li>
-            <li className="mx-3 text-md lg:text-lg font-semibold text-[#FACC15] hover:text-[#38BDF8] transition-colors duration-200">
-              <Link to="/Aboutus" onClick={() => setMenuOpen(false)}>About Us</Link>
-            </li>
-           
-          </ul>
+        {/* Hamburger Icon */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="focus:outline-none"
+          >
+            <div className="space-y-1">
+              <div className="w-6 h-0.5 bg-white"></div>
+              <div className="w-6 h-0.5 bg-white"></div>
+              <div className="w-6 h-0.5 bg-white"></div>
+            </div>
+          </button>
         </div>
 
-        {/* Cart and User Section */}
-        <div className="flex items-center space-x-4">
-          {userDetail && userDetail.data && userDetail.data.user ? (
-            <Link to="/user">
-            User DashBoard
+        {/* Links */}
+        <div className={`md:flex items-center space-x-6 ${menuOpen ? "block absolute top-20 left-0 w-full bg-white text-[#023047] shadow-md p-4" : "hidden md:flex"} transition-all duration-300`}>
+          <Link
+            to="/"
+            className="block md:inline-block text-lg font-semibold hover:text-[#FFB703]"
+            onClick={() => setMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/Aboutus"
+            className="block md:inline-block text-lg font-semibold hover:text-[#FFB703]"
+            onClick={() => setMenuOpen(false)}
+          >
+            About Us
+          </Link>
+          {userDetail?.data?.user ? (
+            <Link
+              to="/user"
+              className="block md:inline-block text-lg font-semibold hover:text-[#FFB703]"
+              onClick={() => setMenuOpen(false)}
+            >
+              Dashboard
             </Link>
           ) : (
-            <button className="text-[#FACC15] text-md font-bold px-6 py-3 border-2 border-[#FACC15] rounded-full hover:bg-[#FACC15] hover:text-[#1E293B] transition-colors duration-300">
-              <Link to="/register">Login/Register</Link>
-            </button>
+            <Link
+              to="/register"
+              className="mt-3 md:mt-0 inline-block px-5 py-2 border border-[#FFB703] text-[#FFB703] rounded-full font-semibold hover:bg-[#FFB703] hover:text-[#023047] transition"
+              onClick={() => setMenuOpen(false)}
+            >
+              Login/Register
+            </Link>
           )}
         </div>
       </div>

@@ -17,6 +17,7 @@ import AddBooks from "./Components/Books/AddBooks.jsx";
 import Book from "./Components/Books/Book.jsx";
 import Home from "./Components/pages/Home.jsx";
 import Navbar from "./Components/pages/Navbar.jsx";
+import AllBooks from "./Components/Books/AllBooks.jsx";
 
 
 
@@ -41,6 +42,7 @@ function App() {
 
 
           <Route path="/AddBooks" element={<AddBooks />} />
+          <Route path="/AllBooks" element={<AllBooks />} />
        ]
         
    

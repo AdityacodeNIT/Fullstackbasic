@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Book } from "../models/book.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { Review } from "../models/review.model.js";
 import fs from "fs";
 
 // Add a new book
@@ -40,7 +41,6 @@ const addBook = asyncHandler(async (req, res) => {
         publishedDate,
         summary,
         bookImage: uploadedImage.url,
-        
     };
 
     // Assign optional fields
@@ -56,43 +56,89 @@ const addBook = asyncHandler(async (req, res) => {
     return res.status(201).json(new ApiResponse(201, book, "Book added successfully."));
 });
 
-// Get all books
+// Get all books (regular listings with filters, sorting, and pagination)
 const getBooks = asyncHandler(async (req, res) => {
-    const books = await Book.find().sort({ createdAt: -1 });
+    const { search, genre, sort, page = 1, limit = 10 } = req.query;
+    
+    // Build query object
+    let query = {};
+
+    if (search) {
+        query.title = { $regex: search, $options: "i" }; // Case-insensitive search
+    }
+
+    if (genre) {
+        query.genre = { $in: genre.split(",") }; // Filter by genre
+    }
+
+    // Sorting based on query params
+    const sortOption = sort === "rating" ? { averageRating: -1 } : { createdAt: -1 }; // Default sorting by creation date
+
+    // Pagination logic
+    const skip = (page - 1) * limit;
+
+    const books = await Book.find(query)
+        .sort(sortOption)
+        .skip(skip)
+        .limit(Number(limit));
 
     if (!books.length) {
         throw new ApiError(404, "No books found.");
-    } else {
-        res.json(books);
     }
+
+    return res.status(200).json(new ApiResponse(200, books, "Books fetched successfully."));
 });
 
+// Get book by ID
 const getBookById = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
-    const book=await Book.findById(id);
+    const book = await Book.findById(id);
     if (!book) {
         throw new ApiError(404, "Book not found.");
     }
-    else{
-        res.json(book);
+
+    return res.json(book);
+});
+
+
+const featuredBooks = async (req, res) => {
+    try {
+      // Step 1: Aggregate the top-rated books based on reviews
+      const topBooksRatings = await Review.aggregate([
+        {
+          $group: {
+            _id: "$BookId", // Group by bookId
+            averageRating: { $avg: "$rating" }, // Calculate average rating
+          },
+        },
+        {
+          $sort: { averageRating: -1 }, // Sort by average rating descending
+        },
+        {
+          $limit: 5, // Limit to top 5 books
+        },
+      ]);
+  
+      // Step 2: Fetch the actual book details for those top-rated books
+      const topBookIds = topBooksRatings.map((item) => item._id);
+      const books = await Book.find({ _id: { $in: topBookIds } });
+  
+      return res.status(200).json(new ApiResponse(200, books, "Top-rated books fetched successfully."));
+      
+    } catch (err) {
+      return res.status(500).json(new ApiResponse(500, null, "Error fetching featured books", err.message));
     }
-});
+  };
+  
+  
+  
 
 
-const featuredBooks = asyncHandler(async (req, res) => {
-    const books = await Book.find()
-        .sort({ averageRating: -1 })
-        .limit(5);
-
-    return res.status(200).json(new ApiResponse(200, books, "Featured books fetched successfully."));
-});
 
 export {
     addBook,
-    
     getBooks,
-  
     featuredBooks,
     getBookById
 };
