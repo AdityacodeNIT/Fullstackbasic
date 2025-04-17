@@ -14,8 +14,7 @@ const Home = () => {
   const [isFeaturedLoading, setIsFeaturedLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [searchParams] = useSearchParams();
-  const genreQuery = searchParams.get("genre");
+  
 
   const [searchQuery, setSearchQuery] = useState("");
  
@@ -53,11 +52,7 @@ const Home = () => {
     fetchFeaturedBooks();
   }, []);
 
-  useEffect(() => {
-    if (genreQuery) {
-      setSelectedGenre(genreQuery);
-    }
-  }, [genreQuery]);
+
 
   const filteredBooks = booksData.filter((book) => {
     const matchesSearchQuery =

@@ -22,7 +22,7 @@ router.route("/login").post(isAuthenticated,loginUser);
 
 router.route("/logout").post(verifyJWT, logOutUser);
 
-router.route("/updateUserdetail").post(verifyJWT, updateAccountdetail);
+router.route("/updateUserdetail").put(verifyJWT, updateAccountdetail);
 router.route("/changePassword").post(verifyJWT, changePassword);
 // Secured Routes
 

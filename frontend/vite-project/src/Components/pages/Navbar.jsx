@@ -9,13 +9,13 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#00B4D8] to-[#0096C7] text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Logo */}
+    
         <div className="flex items-center text-2xl font-bold space-x-2">
           <span className="text-3xl">📚</span>
           <span className="font-serif text-white">BookVerse</span>
         </div>
 
-        {/* Hamburger Icon */}
+      
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -29,7 +29,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Links */}
+    
         <div className={`md:flex items-center space-x-6 ${menuOpen ? "block absolute top-20 left-0 w-full bg-white text-[#023047] shadow-md p-4" : "hidden md:flex"} transition-all duration-300`}>
           <Link
             to="/"

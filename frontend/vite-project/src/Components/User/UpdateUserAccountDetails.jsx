@@ -23,7 +23,7 @@ const UpdateUserAccountDetails = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/api/v1/users/updateUserdetail`,
         updateData,
 
@@ -48,7 +48,7 @@ const UpdateUserAccountDetails = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-gradient-to-r from-pink-400 mt-2 to-purple-500">
+    <div className="h-screen flex flex-col md:flex-row bg-gradient-to-r from-gray-400 mt-2 to-purple-00">
       {/* Left section - Login form */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-4">
         <div className="w-full md:w-3/4 p-8 bg-pink-300 shadow-xl rounded-lg border border-white">
@@ -78,7 +78,7 @@ const UpdateUserAccountDetails = () => {
               type="submit"
               className="w-full p-3 bg-blue-800 text-white font-bold rounded-md transition duration-200 hover:bg-rose-600"
             >
-              Login
+              Update
             </button>
           </form>
         </div>
