@@ -1,0 +1,38 @@
+# Node modules folder
+/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Build output
+/dist
+/build
+/coverage
+
+# Temporary files
+*.tmp
+*.swp
+
+# IDE/Editor folders
+.vscode/
+/.idea/
+/*.sublime-workspace
+/*.sublime-project
+
+# MongoDB database files (if any)
+*.mongodb
+
+# Other relevant files for deployment and cache
+npm-debug.log
+yarn.lock
