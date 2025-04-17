@@ -101,7 +101,7 @@ const Home = () => {
                   key={book._id}
                   className="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 duration-300"
                 >
-                  <Link to="/about" className="block" onClick={() => fetchBook(book._id)}>
+                  <Link to="/aboutBook" className="block" onClick={() => fetchBook(book._id)}>
                     <div className="overflow-hidden rounded-t-xl h-64 bg-gray-200">
                       <img
                         src={book.bookImage || "/placeholder.png"}

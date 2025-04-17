@@ -18,6 +18,7 @@ import Book from "./Components/Books/Book.jsx";
 import Home from "./Components/pages/Home.jsx";
 import Navbar from "./Components/pages/Navbar.jsx";
 import AllBooks from "./Components/Books/AllBooks.jsx";
+import About from "./Components/pages/About.jsx";
 
 
 
@@ -29,7 +30,7 @@ function App() {
      <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/About" element={<Book/>} />
+          <Route path="/aboutBook" element={<Book/>} />
 
  ]
           <Route path="/register" element={<Register />} />
@@ -43,6 +44,8 @@ function App() {
 
           <Route path="/AddBooks" element={<AddBooks />} />
           <Route path="/AllBooks" element={<AllBooks />} />
+
+          <Route path="/About" element={<About />} />
        ]
         
    

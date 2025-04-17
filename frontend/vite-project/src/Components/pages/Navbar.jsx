@@ -39,7 +39,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/Aboutus"
+            to="/About"
             className="block md:inline-block text-lg font-semibold hover:text-[#FFB703]"
             onClick={() => setMenuOpen(false)}
           >
